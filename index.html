@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KCM UNIVERSE</title>
-  <meta name="description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들 — ccccmkk의 프로젝트 모음">
+  <meta name="description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들, 프로 요리 타이쿤 — ccccmkk의 프로젝트 모음">
   <meta property="og:type" content="website">
   <meta property="og:title" content="KCM UNIVERSE">
-  <meta property="og:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들 — ccccmkk의 프로젝트 모음">
+  <meta property="og:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들, 프로 요리 타이쿤 — ccccmkk의 프로젝트 모음">
   <meta property="og:image" content="https://ccccmkk.github.io/kcmuniverse/og-image.png">
   <meta property="og:url" content="https://ccccmkk.github.io/kcmuniverse">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="KCM UNIVERSE">
-  <meta name="twitter:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들 — ccccmkk의 프로젝트 모음">
+  <meta name="twitter:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들, 프로 요리 타이쿤 — ccccmkk의 프로젝트 모음">
   <meta name="twitter:image" content="https://ccccmkk.github.io/kcmuniverse/og-image.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500&display=swap');
@@ -268,6 +268,46 @@
     .kk-cell.correct  { background: #6aaa64; }
     .kk-cell.present  { background: #c9b458; }
     .kk-cell.absent   { background: #787c7e; }
+
+    .preview-tycoon {
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tycoon-header {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: #f59e0b;
+    }
+    .tycoon-floor {
+      display: flex;
+      gap: 8px;
+    }
+    .tycoon-table {
+      width: 48px; height: 48px;
+      border-radius: 8px;
+      background: #fef3c7;
+      border: 2px solid #fde68a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      position: relative;
+    }
+    .tycoon-badge {
+      position: absolute;
+      top: -6px; right: -6px;
+      background: #10b981;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
     .cookie-big {
       font-size: 72px;
       animation: spin-slow 8s linear infinite;
@@ -485,6 +525,29 @@
         <span class="card-tag">Game · Idle</span>
         <span class="card-title">쿠키 클리커</span>
         <p class="card-desc">쿠키를 클릭하고, 업그레이드를 구매하고, 황금 쿠키를 노려라. 다른 플레이어의 쿠키를 훔치는 PvP 요소까지.</p>
+        <span class="card-btn">
+          방문하기
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1V8"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- tycoon: 프로 요리 타이쿤 -->
+    <a class="card" href="https://ccccmkk.github.io/tycoon" target="_blank" rel="noopener">
+      <div class="card-preview preview-tycoon">
+        <div class="tycoon-header">🍳 PRO COOKING TYCOON</div>
+        <div class="tycoon-floor">
+          <div class="tycoon-table">🍜<span class="tycoon-badge">+50</span></div>
+          <div class="tycoon-table">🍣<span class="tycoon-badge">+80</span></div>
+          <div class="tycoon-table">🍕<span class="tycoon-badge">+120</span></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Game · Tycoon</span>
+        <span class="card-title">프로 요리 타이쿤</span>
+        <p class="card-desc">레스토랑을 운영하며 손님을 맞이하고 요리를 서빙하라. 업그레이드로 주방을 확장하고 월드 고메 에디션을 완성하자.</p>
         <span class="card-btn">
           방문하기
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
