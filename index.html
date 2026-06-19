@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KCM UNIVERSE</title>
-  <meta name="description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커 — ccccmkk의 프로젝트 모음">
+  <meta name="description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들 — ccccmkk의 프로젝트 모음">
   <meta property="og:type" content="website">
   <meta property="og:title" content="KCM UNIVERSE">
-  <meta property="og:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커 — ccccmkk의 프로젝트 모음">
+  <meta property="og:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들 — ccccmkk의 프로젝트 모음">
   <meta property="og:image" content="https://ccccmkk.github.io/kcmuniverse/og-image.png">
   <meta property="og:url" content="https://ccccmkk.github.io/kcmuniverse">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="KCM UNIVERSE">
-  <meta name="twitter:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커 — ccccmkk의 프로젝트 모음">
+  <meta name="twitter:description" content="던전 오디세이, REIN SLOTS, SIGNALLAB, 쿠키 클리커, 꼬들 — ccccmkk의 프로젝트 모음">
   <meta name="twitter:image" content="https://ccccmkk.github.io/kcmuniverse/og-image.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500&display=swap');
@@ -239,6 +239,35 @@
     .preview-clicker {
       background: #1a0a2e;
     }
+
+    .preview-kkodle {
+      background: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kkodle-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .kk-row {
+      display: flex;
+      gap: 6px;
+    }
+    .kk-cell {
+      width: 38px; height: 38px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+    }
+    .kk-cell.correct  { background: #6aaa64; }
+    .kk-cell.present  { background: #c9b458; }
+    .kk-cell.absent   { background: #787c7e; }
     .cookie-big {
       font-size: 72px;
       animation: spin-slow 8s linear infinite;
@@ -456,6 +485,41 @@
         <span class="card-tag">Game · Idle</span>
         <span class="card-title">쿠키 클리커</span>
         <p class="card-desc">쿠키를 클릭하고, 업그레이드를 구매하고, 황금 쿠키를 노려라. 다른 플레이어의 쿠키를 훔치는 PvP 요소까지.</p>
+        <span class="card-btn">
+          방문하기
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1V8"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- kkodle: 꼬들 -->
+    <a class="card" href="https://ccccmkk.github.io/kkodle" target="_blank" rel="noopener">
+      <div class="card-preview preview-kkodle">
+        <div class="kkodle-grid">
+          <div class="kk-row">
+            <div class="kk-cell correct">꼬</div>
+            <div class="kk-cell present">들</div>
+            <div class="kk-cell absent">게</div>
+            <div class="kk-cell absent">임</div>
+            <div class="kk-cell correct">이</div>
+            <div class="kk-cell present">다</div>
+          </div>
+          <div class="kk-row">
+            <div class="kk-cell correct">꼬</div>
+            <div class="kk-cell correct">들</div>
+            <div class="kk-cell correct">한</div>
+            <div class="kk-cell correct">국</div>
+            <div class="kk-cell correct">어</div>
+            <div class="kk-cell correct">!</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Game · Word</span>
+        <span class="card-title">꼬들</span>
+        <p class="card-desc">매일 새로운 6자 한국어 단어를 맞추는 워들 게임. 초록·노랑·회색 힌트로 정답을 추리하라.</p>
         <span class="card-btn">
           방문하기
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
