@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCM UNIVERSE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #040812;
+      --card-bg: rgba(10, 18, 40, 0.85);
+      --border: rgba(80, 120, 220, 0.25);
+      --border-hover: rgba(120, 180, 255, 0.6);
+      --text: #c8d8f0;
+      --text-dim: #6a85b0;
+      --accent: #4f8eff;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── 별 배경 ── */
+    #stars-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── 네뷸라 그라데이션 ── */
+    .nebula {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .nebula-1 { width: 600px; height: 600px; background: #1a3aff; top: -200px; left: -100px; }
+    .nebula-2 { width: 500px; height: 500px; background: #6b0fff; bottom: -150px; right: -100px; }
+    .nebula-3 { width: 400px; height: 400px; background: #0affcc; top: 40%; left: 50%; transform: translateX(-50%); opacity: 0.07; }
+
+    /* ── 레이아웃 ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 24px 80px;
+    }
+
+    /* ── 헤더 ── */
+    header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      line-height: 1;
+      background: linear-gradient(135deg, #a8c8ff 0%, #ffffff 50%, #7eb0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .logo-dot {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+      margin: 0 4px;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    /* ── 그리드 ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* ── 카드 ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(12px);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(80, 140, 255, 0.15);
+    }
+
+    /* 카드 미리보기 영역 */
+    .card-preview {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* 각 사이트별 미리보기 */
+    .preview-rogd {
+      background: #050505;
+      font-family: 'Courier New', monospace;
+    }
+    .preview-rogd .term {
+      color: #33ff33;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 16px;
+      white-space: pre;
+      opacity: 0.85;
+    }
+    .preview-rogd::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, #050505 100%);
+    }
+
+    .preview-rein {
+      background: #08050f;
+    }
+    .rein-slots {
+      display: grid;
+      grid-template-columns: repeat(3, 52px);
+      gap: 6px;
+    }
+    .rein-slot {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(180,100,255,0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: inset 0 0 12px rgba(150,80,255,0.1);
+    }
+    .rein-label {
+      position: absolute;
+      top: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: rgba(200,150,255,0.8);
+    }
+
+    .preview-charts {
+      background: #f1f5f9;
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 100px;
+      padding: 0 20px;
+    }
+    .bar {
+      width: 22px;
+      border-radius: 4px 4px 0 0;
+      opacity: 0.85;
+    }
+    .bar-up { background: #059669; }
+    .bar-dn { background: #dc2626; }
+    .chart-title {
+      position: absolute;
+      top: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2563eb;
+      letter-spacing: 0.05em;
+    }
+    .chart-line {
+      position: absolute;
+      bottom: 40px;
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    .preview-clicker {
+      background: #1a0a2e;
+    }
+    .cookie-big {
+      font-size: 72px;
+      animation: spin-slow 8s linear infinite;
+      filter: drop-shadow(0 0 20px rgba(200,140,60,0.5));
+    }
+    .cookie-floats {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .cf {
+      position: absolute;
+      font-size: 14px;
+      color: #f0c060;
+      opacity: 0;
+      animation: float-up 3s ease-out infinite;
+    }
+    .cf:nth-child(1) { left: 20%; animation-delay: 0s; }
+    .cf:nth-child(2) { left: 50%; animation-delay: 1s; }
+    .cf:nth-child(3) { left: 75%; animation-delay: 2s; }
+
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes float-up {
+      0% { bottom: 20px; opacity: 0; }
+      20% { opacity: 1; }
+      100% { bottom: 80%; opacity: 0; }
+    }
+
+    /* 카드 내용 */
+    .card-body {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #e8f0ff;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(79, 142, 255, 0.08);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s;
+      align-self: flex-start;
+    }
+
+    .card:hover .card-btn {
+      background: rgba(79, 142, 255, 0.18);
+      border-color: rgba(79, 142, 255, 0.5);
+    }
+
+    .card-btn svg {
+      width: 12px; height: 12px;
+      transition: transform 0.2s;
+    }
+
+    .card:hover .card-btn svg {
+      transform: translate(2px, -2px);
+    }
+
+    /* ── 푸터 ── */
+    footer {
+      margin-top: 72px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<div class="nebula nebula-3"></div>
+
+<div class="page">
+  <header>
+    <div class="logo">KCM<span class="logo-dot"></span>UNIVERSE</div>
+    <p class="subtitle">A collection of projects</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- rogd: 던전 오디세이 -->
+    <a class="card" href="https://ccccmkk.github.io/rogd" target="_blank" rel="noopener">
+      <div class="card-preview preview-rogd">
+        <div class="term">┌─────────────────────┐
+│  던전 오디세이        │
+│  B3F  ▓▓▓░░░░░░░  │
+│                     │
+│  ⚔  몬스터 출현!    │
+│  HP ████████░░ 80% │
+│  > 공격 / 방어 / 도망│
+└─────────────────────┘</div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Game · RPG</span>
+        <span class="card-title">던전 오디세이</span>
+        <p class="card-desc">30층 지하 던전을 탐험하는 텍스트 기반 RPG. 몬스터를 처치하고, 상점에서 아이템을 구매하며 최하층을 목표로 나아가라.</p>
+        <span class="card-btn">
+          방문하기
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1V8"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- rein: 슬롯머신 -->
+    <a class="card" href="https://ccccmkk.github.io/rein" target="_blank" rel="noopener">
+      <div class="card-preview preview-rein">
+        <span class="rein-label">REIN SLOTS</span>
+        <div class="rein-slots">
+          <div class="rein-slot">🍒</div>
+          <div class="rein-slot">⭐</div>
+          <div class="rein-slot">🍒</div>
+          <div class="rein-slot">💎</div>
+          <div class="rein-slot">🍒</div>
+          <div class="rein-slot">💎</div>
+          <div class="rein-slot">⭐</div>
+          <div class="rein-slot">⭐</div>
+          <div class="rein-slot">⭐</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Game · Casino</span>
+        <span class="card-title">REIN SLOTS</span>
+        <p class="card-desc">코인을 베팅하고 슬롯을 돌려 잭팟을 노려라. 업그레이드와 소모품으로 배율을 높이고 랭킹에 이름을 올려보자.</p>
+        <span class="card-btn">
+          방문하기
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1V8"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- charts: SIGNALLAB -->
+    <a class="card" href="https://ccccmkk.github.io/charts" target="_blank" rel="noopener">
+      <div class="card-preview preview-charts">
+        <span class="chart-title">📈 SIGNALLAB</span>
+        <div class="chart-bars">
+          <div class="bar bar-up" style="height:45px"></div>
+          <div class="bar bar-dn" style="height:30px"></div>
+          <div class="bar bar-up" style="height:70px"></div>
+          <div class="bar bar-up" style="height:55px"></div>
+          <div class="bar bar-dn" style="height:40px"></div>
+          <div class="bar bar-up" style="height:85px"></div>
+          <div class="bar bar-up" style="height:60px"></div>
+          <div class="bar bar-dn" style="height:35px"></div>
+          <div class="bar bar-up" style="height:90px"></div>
+        </div>
+        <div class="chart-line"></div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Tool · Finance</span>
+        <span class="card-title">SIGNALLAB</span>
+        <p class="card-desc">주식 티커를 입력하면 실시간 캔들 차트와 지표를 시각화. 종목 분석을 빠르고 직관적으로.</p>
+        <span class="card-btn">
+          방문하기
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1V8"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- clicker: 쿠키 클리커 -->
+    <a class="card" href="https://ccccmkk.github.io/clicker" target="_blank" rel="noopener">
+      <div class="card-preview preview-clicker">
+        <div class="cookie-floats">
+          <span class="cf">+1</span>
+          <span class="cf">+1</span>
+          <span class="cf">+1</span>
+        </div>
+        <span class="cookie-big">🍪</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Game · Idle</span>
+        <span class="card-title">쿠키 클리커</span>
+        <p class="card-desc">쿠키를 클릭하고, 업그레이드를 구매하고, 황금 쿠키를 노려라. 다른 플레이어의 쿠키를 훔치는 PvP 요소까지.</p>
+        <span class="card-btn">
+          방문하기
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M1 11L11 1M11 1H4M11 1V8"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <p>© 2026 KCM UNIVERSE &nbsp;·&nbsp; Made by ccccmkk</p>
+  </footer>
+</div>
+
+<script>
+  // 별 애니메이션
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.body.scrollHeight;
+  }
+
+  function initStars() {
+    stars = [];
+    const count = Math.floor((canvas.width * canvas.height) / 4000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.4 + 0.2,
+        alpha: Math.random() * 0.7 + 0.2,
+        speed: Math.random() * 0.004 + 0.001,
+        offset: Math.random() * Math.PI * 2,
+      });
+    }
+  }
+
+  let tick = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    tick += 0.01;
+    for (const s of stars) {
+      const a = s.alpha * (0.5 + 0.5 * Math.sin(tick * s.speed * 100 + s.offset));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200, 220, 255, ${a})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  resize();
+  initStars();
+  draw();
+</script>
+</body>
+</html>
