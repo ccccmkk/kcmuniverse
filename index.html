@@ -10,13 +10,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #040812;
-      --card-bg: rgba(10, 18, 40, 0.85);
-      --border: rgba(80, 120, 220, 0.25);
-      --border-hover: rgba(120, 180, 255, 0.6);
-      --text: #c8d8f0;
-      --text-dim: #6a85b0;
-      --accent: #4f8eff;
+      --bg: #f0f4ff;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --border: rgba(100, 130, 220, 0.2);
+      --border-hover: rgba(80, 120, 255, 0.5);
+      --text: #1e2a4a;
+      --text-dim: #7a8ab0;
+      --accent: #3a6eff;
     }
 
     html, body {
@@ -39,14 +39,14 @@
     .nebula {
       position: fixed;
       border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.12;
+      filter: blur(140px);
+      opacity: 0.18;
       pointer-events: none;
       z-index: 0;
     }
-    .nebula-1 { width: 600px; height: 600px; background: #1a3aff; top: -200px; left: -100px; }
-    .nebula-2 { width: 500px; height: 500px; background: #6b0fff; bottom: -150px; right: -100px; }
-    .nebula-3 { width: 400px; height: 400px; background: #0affcc; top: 40%; left: 50%; transform: translateX(-50%); opacity: 0.07; }
+    .nebula-1 { width: 600px; height: 600px; background: #a0b8ff; top: -200px; left: -100px; }
+    .nebula-2 { width: 500px; height: 500px; background: #c4a0ff; bottom: -150px; right: -100px; }
+    .nebula-3 { width: 400px; height: 400px; background: #a0f0e0; top: 40%; left: 50%; transform: translateX(-50%); opacity: 0.12; }
 
     /* ── 레이아웃 ── */
     .page {
@@ -71,7 +71,7 @@
       font-weight: 900;
       letter-spacing: 0.12em;
       line-height: 1;
-      background: linear-gradient(135deg, #a8c8ff 0%, #ffffff 50%, #7eb0ff 100%);
+      background: linear-gradient(135deg, #2a4acc 0%, #1a2f8f 50%, #3a6eff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -120,6 +120,7 @@
       flex-direction: column;
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
       backdrop-filter: blur(12px);
+      box-shadow: 0 2px 16px rgba(80, 100, 200, 0.07);
       text-decoration: none;
       color: inherit;
     }
@@ -127,7 +128,7 @@
     .card:hover {
       border-color: var(--border-hover);
       transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(80, 140, 255, 0.15);
+      box-shadow: 0 20px 60px rgba(80, 100, 255, 0.12);
     }
 
     /* 카드 미리보기 영역 */
@@ -280,7 +281,7 @@
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: 0.05em;
-      color: #e8f0ff;
+      color: #1a2a5a;
     }
 
     .card-desc {
@@ -495,7 +496,7 @@
       const a = s.alpha * (0.5 + 0.5 * Math.sin(tick * s.speed * 100 + s.offset));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(200, 220, 255, ${a})`;
+      ctx.fillStyle = `rgba(80, 120, 255, ${a * 0.35})`;
       ctx.fill();
     }
     requestAnimationFrame(draw);
